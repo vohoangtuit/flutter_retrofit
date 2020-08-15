@@ -3,7 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:retrofit_app/models/product.dart';
-import 'package:retrofit_app/network/restclient.dart';
+import 'file:///C:/TU/Develop/Demo/flutter_retrofit/lib/network/base/base_response.dart';
+import 'package:retrofit_app/network/rest_client.dart';
+import 'package:retrofit_app/network/network.dart';
 import 'package:retrofit_app/widget/basewidget.dart';
 import 'package:retrofit_app/widget/loading.dart';
 
@@ -16,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
+  var restApi = RestClient();
   List<Product> list = List<Product>();
   bool _isLoading =false;
   @override
@@ -56,12 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _isLoading =true;
     });
-    var data =await client.getProducts();
-    if(data!=null){
+    var result =await restApi.getProducts();
+    if(result!=null){
       setState(() {
-        list=data;
         _isLoading =false;
-        print(" list "+list.toString());
+        list=result.data ;
+      //  print(" list "+list.toString());
       });
     }else{
       print("no data-----------------------");
