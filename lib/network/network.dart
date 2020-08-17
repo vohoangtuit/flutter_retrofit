@@ -35,4 +35,7 @@ abstract class Network {
 
   @GET("/products")
   Future<List<Product>> getProducts();
+
+  @GET("/products/{id}")
+  Future<Product> getDetailProduct(@Path("id") String id);
 }

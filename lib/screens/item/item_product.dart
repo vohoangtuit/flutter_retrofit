@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:retrofit_app/models/product.dart';
+import 'package:retrofit_app/utils/formats.dart';
 import 'package:retrofit_app/widget/text_style.dart';
 
 class ItemProduct extends StatefulWidget {
@@ -15,6 +16,7 @@ class _ItemUserState extends State<ItemProduct> {
 
   @override
   Widget build(BuildContext context) {
+    var date = new DateTime.fromMillisecondsSinceEpoch(1000 * 1000);
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 5.0, 8.0, 5.0),
       child: InkWell(
@@ -27,20 +29,27 @@ class _ItemUserState extends State<ItemProduct> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
-                    child: widget.product.image.isNotEmpty?Image.network(widget.product.image,width: 90,height: 100,):Image.asset('assets/images/logo.png',width: 90,height: 100,),
+                    child: widget.product.image.isNotEmpty?Image.network(widget.product.image,width: 90,height: 100,):Image.asset('assets/images/logo.png',width: 90,height: 100,fit:BoxFit.fill),
                   ),
                   Flexible(
                     child:  Column(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          //padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.only(left: 10, top: 10, right: 5, bottom: 5),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(widget.product.name,style: textBlueMedium(), overflow: TextOverflow.ellipsis,
+                              Text(widget.product.name,style: textBlueMediumBold(), overflow: TextOverflow.ellipsis,
                                 maxLines: 2,),
-                              SizedBox(height: 5,),
-                              Text(" "+widget.product.price.toString(),style: normalTextBlack()),
+                              SizedBox(height: 10,),
+                              TextMoneyFromInt(widget.product.price),
+                              SizedBox(height: 10,),
+                              Align(alignment: Alignment.bottomRight,
+                                //child: Text(DateTime.fromMillisecondsSinceEpoch(widget.product.createdAt * 1000).toString(),style: normalTextRed(),textAlign: TextAlign.right),
+                                child: TextDate_DD_MM_YYYY(widget.product.createdAt)
+                              ),
+                              
                             ],
                           ),
                         ),

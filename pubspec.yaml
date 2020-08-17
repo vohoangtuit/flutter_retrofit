@@ -40,6 +40,8 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   dio: ^3.0.10
   shared_preferences: ^0.5.8
+  intl: any
+  flutter_money_formatter: any
 
 dev_dependencies:
   flutter_test:

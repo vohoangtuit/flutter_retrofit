@@ -1,11 +1,8 @@
 
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:retrofit_app/base/bases_statefulwidget.dart';
 import 'package:retrofit_app/models/product.dart';
-import 'file:///C:/TU/Develop/Demo/flutter_retrofit/lib/network/base/base_response.dart';
-import 'package:retrofit_app/network/rest_client.dart';
-import 'package:retrofit_app/network/network.dart';
 import 'package:retrofit_app/widget/basewidget.dart';
 import 'package:retrofit_app/widget/loading.dart';
 
@@ -17,10 +14,9 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  var restApi = RestClient();
+class _HomeScreenState extends BaseStatefulState<HomeScreen> {
   List<Product> list = List<Product>();
-  bool _isLoading =false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           initListView(),
           Center(
-            child: _isLoading ? widgetLoading() : null,
+            child: isLoading ? widgetLoading() : null,
           )
         ],
       ),
@@ -56,16 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   _getData()async{
     setState(() {
-      _isLoading =true;
+      isLoading =true;
     });
     var result =await restApi.getProducts();
     if(result!=null){
       setState(() {
-        _isLoading =false;
+        isLoading =false;
         list=result.data ;
       //  print(" list "+list.toString());
       });
     }else{
+      setState(() {
+        isLoading =false;
+      });
       print("no data-----------------------");
     }
   }

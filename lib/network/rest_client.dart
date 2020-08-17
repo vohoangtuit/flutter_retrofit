@@ -21,4 +21,14 @@ class RestClient{
     }
     return BaseResponseModel()..data = response;
   }
+  Future<BaseResponseModel<Product>> getDetailProduct(String id) async {
+    Product response;
+    try {
+      response = await network.getDetailProduct(id);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return BaseResponseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseResponseModel()..data = response;
+  }
 }

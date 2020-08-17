@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Stack widgetLoading(){
+
   return Stack(
     children: [
       new Opacity(
