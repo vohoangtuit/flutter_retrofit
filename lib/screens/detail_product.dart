@@ -66,7 +66,8 @@ class _DetailProductState extends BaseStatefulState<DetailProduct> {
     if(result!=null&&result.data!=null){
       setState(() {
         detail =result.data;
-        showMaterialDialog(detail.name,detail.price.toString());
+        //showMaterialDialog(detail.name,detail.price.toString());
+        showBaseDialog('Message',detail.name);
         isLoading =false;
       });
 

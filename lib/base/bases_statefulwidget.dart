@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:retrofit_app/base/dialog.dart';
 import 'package:retrofit_app/network/rest_client.dart';
 import 'package:retrofit_app/widget/loading.dart';
 import 'package:retrofit_app/widget/loadingdialog.dart';
 
+typedef Int2VoidFunc = void Function(String);
 abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
-  var restApi = RestClient();
-   bool isLoading =false;
-   LoadingDialog loadingDialog;
-
-//  _BaseStatefulState() {
-//
-//  }
+  bool isLoading =false;
+  LoadingDialog loadingDialog;
+  BaseDialog  dialog;
+//  var  restApi = RestClient(onPressed: (){
+//    show();
+//  });
+  RestClient  restApi=  RestClient();
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       children: <Widget>[
         Container(
@@ -32,21 +33,16 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
   void baseMethod() {
     // Parent method
   }
-  showMaterialDialog(String title, String message) {
+  showBaseDialog(String title,String description){
+    if(dialog!=null){
+      dialog.dismiss();
+    }
+    dialog = new BaseDialog(title: title, description: description);
     showDialog(
-        context: context,
-        builder: (_) => new AlertDialog(
-          title: new Text(title),
-          content: new Text(message),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        ));
+     // barrierDismissible: false,// touch outside dismiss
+      context: context,
+      builder: (BuildContext context) => dialog
+    );
   }
 
   void showLoading(bool show)async{
@@ -68,4 +64,9 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
     });
 
   }
+
+   void onPressed() {
+
+  }
+
 }

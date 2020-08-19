@@ -61,7 +61,8 @@ class _HomeScreenState extends BaseStatefulState<HomeScreen> {
         list=result.data ;
       //  print(" list "+list.toString());
       });
-    }else{
+    }
+    else{
       setState(() {
         isLoading =false;
       });

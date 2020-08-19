@@ -2,10 +2,14 @@ import 'package:dio/dio.dart' hide Headers;
 
 class ServerError implements Exception {
   int _errorCode;
-  String _errorMessage = "";
-
+  String errorMessage = "";
+  ServerError();
   ServerError.withError({DioError error}) {
     _handleError(error);
+  }
+
+  String getError(DioError error){
+   return errorMessage =_handleError(error).toString();
   }
 
   getErrorCode() {
@@ -13,32 +17,32 @@ class ServerError implements Exception {
   }
 
   getErrorMessage() {
-    return _errorMessage;
+    return errorMessage;
   }
 
   _handleError(DioError error) {
     switch (error.type) {
       case DioErrorType.CANCEL:
-        _errorMessage = "Request was cancelled";
+        errorMessage = "Request was cancelled";
         break;
       case DioErrorType.CONNECT_TIMEOUT:
-        _errorMessage = "Connection timeout";
+        errorMessage = "Connection timeout";
         break;
       case DioErrorType.DEFAULT:
-        _errorMessage =
+        errorMessage =
         "Connection failed due to internet connection";
         break;
       case DioErrorType.RECEIVE_TIMEOUT:
-        _errorMessage = "Receive timeout in connection";
+        errorMessage = "Receive timeout in connection";
         break;
       case DioErrorType.RESPONSE:
-        _errorMessage =
+        errorMessage =
         "Received invalid status code: ${error.response.statusCode}";
         break;
       case DioErrorType.SEND_TIMEOUT:
-        _errorMessage = "Receive timeout in send request";
+        errorMessage = "Receive timeout in send request";
         break;
     }
-    return _errorMessage;
+    return errorMessage;
   }
 }

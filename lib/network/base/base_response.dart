@@ -1,12 +1,13 @@
-import 'file:///C:/TU/Develop/Demo/flutter_retrofit/lib/network/base/server_errror.dart';
+
+import 'package:retrofit_app/network/base/server_errror.dart';
 
 class BaseResponseModel<T> {
-  ServerError _error;
+  ServerError serverError;
   T data;
   List<T> listData;
 
   setException(ServerError error) {
-    _error = error;
+    serverError = error;
   }
 
   setData(T data) {
@@ -16,7 +17,7 @@ class BaseResponseModel<T> {
     this.listData = listData;
   }
 
-  get getException {
-    return _error;
+  get getServerError {
+    return serverError;
   }
 }
