@@ -55,11 +55,10 @@ class _HomeScreenState extends BaseStatefulState<HomeScreen> {
       isLoading =true;
     });
     var result =await restApi.getProducts();
-    if(result!=null){
+    if(result!=null&&result.data!=null){
       setState(() {
         isLoading =false;
         list=result.data ;
-      //  print(" list "+list.toString());
       });
     }
     else{

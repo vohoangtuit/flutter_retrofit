@@ -30,7 +30,7 @@ class ServerError implements Exception {
         break;
       case DioErrorType.DEFAULT:
         errorMessage =
-        "Connection failed due to internet connection";
+        "Please check internet connection";
         break;
       case DioErrorType.RECEIVE_TIMEOUT:
         errorMessage = "Receive timeout in connection";

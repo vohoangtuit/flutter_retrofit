@@ -9,12 +9,11 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
   bool isLoading =false;
   LoadingDialog loadingDialog;
   BaseDialog  dialog;
-//  var  restApi = RestClient(onPressed: (){
-//    show();
-//  });
-  RestClient  restApi=  RestClient();
+ static BaseStatefulState baseStatefulState;
+  var  restApi;
   @override
   Widget build(BuildContext context) {
+
     return Stack(
       children: <Widget>[
         Container(
@@ -26,8 +25,9 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    baseStatefulState=this;
+    restApi =  RestClient(baseStatefulState:baseStatefulState);
   }
 
   void baseMethod() {
@@ -62,10 +62,6 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
         }
       }
     });
-
-  }
-
-   void onPressed() {
 
   }
 

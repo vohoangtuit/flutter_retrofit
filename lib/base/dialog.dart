@@ -13,11 +13,9 @@ class BaseDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.context =context;
-
-      print("dialog==null ");
       dialog = new Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
         elevation: 0.0,
         backgroundColor: Colors.white,
