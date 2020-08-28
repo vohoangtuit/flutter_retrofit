@@ -3,7 +3,6 @@ import 'package:retrofit_app/base/bases_statefulwidget.dart';
 import 'package:retrofit_app/models/product.dart';
 import 'package:retrofit_app/utils/formats.dart';
 import 'package:retrofit_app/widget/basewidget.dart';
-import 'package:retrofit_app/widget/loading.dart';
 import 'package:retrofit_app/widget/text_style.dart';
 
 class DetailProduct extends StatefulWidget {
@@ -43,9 +42,6 @@ class _DetailProductState extends BaseStatefulState<DetailProduct> {
               ],
             ),
           ),
-          Center(
-            child: isLoading ? widgetLoading() : null,
-          )
         ],
       ),
 
@@ -54,28 +50,22 @@ class _DetailProductState extends BaseStatefulState<DetailProduct> {
   @override
   void initState() {
     super.initState();
-    _getDetail();
+
+    Future.delayed(Duration.zero, () async {
+      _getDetail();
+    });
   }
 
   _getDetail()async{
-
-    setState(() {
-      isLoading =true;
-    });
     var result =await restApi.getDetailProduct(widget.product.id);
     if(result!=null&&result.data!=null){
       setState(() {
         detail =result.data;
-        //showMaterialDialog(detail.name,detail.price.toString());
         showBaseDialog('Message',detail.name);
-        isLoading =false;
       });
 
     }else{
-      setState(() {
-        isLoading =false;
-      });
-
+      showBaseDialog('Message',"Error Detail!");
     }
 
   }

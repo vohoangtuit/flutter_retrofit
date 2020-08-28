@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:retrofit_app/base/bases_statefulwidget.dart';
 import 'package:retrofit_app/models/product.dart';
 import 'package:retrofit_app/widget/basewidget.dart';
-import 'package:retrofit_app/widget/loading.dart';
 
 import 'detail_product.dart';
 import 'item/item_product.dart';
@@ -24,9 +23,7 @@ class _HomeScreenState extends BaseStatefulState<HomeScreen> {
       body: Stack(
         children: <Widget>[
           initListView(),
-          Center(
-            child: isLoading ? widgetLoading() : null,
-          )
+
         ],
       ),
     );
@@ -35,7 +32,10 @@ class _HomeScreenState extends BaseStatefulState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _getData();
+    Future.delayed(Duration.zero, () async {
+      _getData();
+    });
+
   }
   ListView initListView(){
     return ListView.separated(
@@ -51,20 +51,13 @@ class _HomeScreenState extends BaseStatefulState<HomeScreen> {
     );
   }
   _getData()async{
-    setState(() {
-      isLoading =true;
-    });
     var result =await restApi.getProducts();
     if(result!=null&&result.data!=null){
       setState(() {
-        isLoading =false;
         list=result.data ;
       });
     }
     else{
-      setState(() {
-        isLoading =false;
-      });
       print("no data-----------------------");
     }
   }

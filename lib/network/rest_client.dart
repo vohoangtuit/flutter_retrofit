@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:retrofit_app/base/bases_statefulwidget.dart';
 import 'package:retrofit_app/models/product.dart';
 import 'package:retrofit_app/network/base/base_response.dart';
@@ -10,7 +9,6 @@ class RestClient{
   Dio dio;
   Network network;
  final BaseStatefulState baseStatefulState;
-//  final Function(String message) errorMessage;
   RestClient({this.baseStatefulState}) {
     dio = new Dio();
     network = new Network(dio);
@@ -18,24 +16,34 @@ class RestClient{
 
   Future<BaseResponseModel<List<Product>>> getProducts() async {
     List<Product> response;
+    showLoading(true);
     try {
       response = await network.getProducts();
+      showLoading(false);
     } catch (error, stacktrace) {
-    //  print("Exception occured: $error stackTrace: $stacktrace");
-      baseStatefulState.showBaseDialog("Error",ServerError().getError(error));
+      showLoading(false);
      return BaseResponseModel()..setException(ServerError.withError(error: error));
     }
     return BaseResponseModel()..data = response;
   }
   Future<BaseResponseModel<Product>> getDetailProduct(String id) async {
     Product response;
+    showLoading(true);
     try {
       response = await network.getDetailProduct(id);
+      showLoading(false);
     } catch (error, stacktrace) {
-     // print("Exception occured: $error stackTrace: $stacktrace");
-      baseStatefulState.showBaseDialog("Error",ServerError().getError(error));
+      showLoading(false);
       return BaseResponseModel()..setException(ServerError.withError(error: error));
     }
     return BaseResponseModel()..data = response;
+  }
+
+  showLoading(bool show){
+    if(show){
+      baseStatefulState.showLoading();
+    }else{
+      baseStatefulState.hideLoading();
+    }
   }
 }

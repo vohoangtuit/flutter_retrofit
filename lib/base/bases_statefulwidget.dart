@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:retrofit_app/base/dialog.dart';
 import 'package:retrofit_app/network/rest_client.dart';
-import 'package:retrofit_app/widget/loading.dart';
-import 'package:retrofit_app/widget/loadingdialog.dart';
+import 'package:retrofit_app/widget/progressbar.dart';
 
 typedef Int2VoidFunc = void Function(String);
 abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
-  bool isLoading =false;
-  LoadingDialog loadingDialog;
   BaseDialog  dialog;
  static BaseStatefulState baseStatefulState;
   var  restApi;
+  ProgressBar progressBar;
+  bool onStart =false;
   @override
   Widget build(BuildContext context) {
 
     return Stack(
       children: <Widget>[
         Container(
-          child: isLoading?widgetLoading():Container() ,
+
         )
       ],
     );
@@ -26,8 +25,21 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
   @override
   void initState() {
     super.initState();
+    progressBar= new ProgressBar();
     baseStatefulState=this;
     restApi =  RestClient(baseStatefulState:baseStatefulState);
+  }
+  @override
+  void dispose() {
+    progressBar.hide();
+    super.dispose();
+  }
+  void showLoading() {
+    progressBar.show(context);
+  }
+
+  void hideLoading() {
+    progressBar.hide();
   }
 
   void baseMethod() {
@@ -43,26 +55,6 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
       context: context,
       builder: (BuildContext context) => dialog
     );
-  }
-
-  void showLoading(bool show)async{
-    await new Future.delayed(new Duration(milliseconds: 30));
-    setState(() async{
-      if(show){
-        await showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) =>
-            loadingDialog = loadingDialog ?? LoadingDialog());
-      }else{
-        if (loadingDialog != null && loadingDialog.isShowing()) {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-          loadingDialog = null;
-        }
-      }
-    });
-
   }
 
 }

@@ -26,7 +26,7 @@ abstract class Network {
 
     );
     dio.interceptors.add(LogInterceptor(requestBody: true,responseBody: true));
-
+    //final client = Network(dio, baseUrl: "your base url");
     return _Network(dio, baseUrl: baseUrl);
   }
 
