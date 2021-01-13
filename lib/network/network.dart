@@ -11,11 +11,11 @@ part 'network.g.dart';
 // todo: run comment restclient.g.dart =// cd root project : flutter pub run build_runner build
 @RestApi(baseUrl: "https://5f34f6e09124200016e19304.mockapi.io/api/v1/")
 abstract class Network {
-  factory Network(Dio dio, {String baseUrl}) {
+  factory Network(Dio dio,String token, {String baseUrl}) {
     Map<String, dynamic> requestHeaders = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': '<Your token>',
+      'Authorization': token,
       'Language': 'vi'
     };
     dio.options = BaseOptions(
@@ -25,7 +25,8 @@ abstract class Network {
         headers: requestHeaders,
 
     );
-    dio.interceptors.add(LogInterceptor(requestBody: true,responseBody: true));
+
+    dio.interceptors.add(LogInterceptor(requestBody: true,responseBody: true));// // todo: this is log body every request and response
     //final client = Network(dio, baseUrl: "your base url");
     return _Network(dio, baseUrl: baseUrl);
   }

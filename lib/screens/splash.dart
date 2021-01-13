@@ -37,15 +37,15 @@ class _SplashScreenState extends State<SplashScreen> {
     await SharedPre.getBoolKey(SharedPre.sharedPreIsLogin).then((value){
       Future.delayed(Duration(seconds: 3),()async{
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-//        if(value!=null){
-//          if(value){
-//            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-//          }else{
-//            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignInScreen()));
-//          }
-//        }else{
-//          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignInScreen()));
-//        }
+       if(value!=null){
+         if(value){
+           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+         }else{
+           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignInScreen()));
+         }
+       }else{
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignInScreen()));
+       }
       }
       );
     });

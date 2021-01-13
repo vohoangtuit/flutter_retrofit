@@ -53,9 +53,12 @@ class _HomeScreenState extends BaseStatefulState<HomeScreen> {
   _getData()async{
     var result =await restApi.getProducts();
     if(result!=null&&result.data!=null){
-      setState(() {
-        list=result.data ;
-      });
+      if(mounted){
+        setState(() {
+          list=result.data ;
+        });
+      }
+
     }
     else{
       print("no data-----------------------");

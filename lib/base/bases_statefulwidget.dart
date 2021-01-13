@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:retrofit_app/base/dialog.dart';
 import 'package:retrofit_app/network/rest_client.dart';
+import 'package:retrofit_app/utils/shared_preference.dart';
 import 'package:retrofit_app/widget/progressbar.dart';
 
 typedef Int2VoidFunc = void Function(String);
@@ -10,6 +11,7 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
   var  restApi;
   ProgressBar progressBar;
   bool onStart =false;
+  String token="hello";
   @override
   Widget build(BuildContext context) {
 
@@ -27,12 +29,27 @@ abstract class BaseStatefulState<T extends StatefulWidget> extends State<T> {
     super.initState();
     progressBar= new ProgressBar();
     baseStatefulState=this;
-    restApi =  RestClient(baseStatefulState:baseStatefulState);
+    _getToken();
+    restApi =  RestClient(baseStatefulState:baseStatefulState,token:token);
   }
   @override
   void dispose() {
     progressBar.hide();
     super.dispose();
+  }
+  _getToken()async{
+    // todo: save token to SharedPre or database local after login, and get it
+   await SharedPre.getStringKey(SharedPre.sharedPreToken).then((value){
+     if(value?.isEmpty ?? true){
+       return;
+     }else{
+       if(mounted){
+         setState(() {
+           token =value;
+         });
+       }
+     }
+    });
   }
   void showLoading() {
     progressBar.show(context);

@@ -9,9 +9,10 @@ class RestClient{
   Dio dio;
   Network network;
  final BaseStatefulState baseStatefulState;
-  RestClient({this.baseStatefulState}) {
+ final String token;
+  RestClient({this.baseStatefulState,this.token}) {
     dio = new Dio();
-    network = new Network(dio);
+    network = new Network(dio,token);
   }
 
   Future<BaseResponseModel<List<Product>>> getProducts() async {

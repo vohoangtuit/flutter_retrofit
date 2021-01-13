@@ -4,6 +4,7 @@ class SharedPre {
   static String sharedPreFullName ="FULL_NAME";
   static String sharedPreEmail ="EMAIL";
   static String sharedPreAvatar="AVATAR";
+  static String sharedPreToken="TOKEN";
 
   static Future<bool> saveBool(String key,bool value) async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
